@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // دالة للتحقق مما إذا كان المستخدم مشرفاً
+    function isAdmin() {
+      return request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+
+    // قواعد ملفات المستخدمين
+    match /users/{userId} {
+      allow read: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      
+      // السماح بإنشاء الوثيقة عند التسجيل لأول مرة بقيم افتراضية آمنة
+      allow create: if request.auth != null && request.auth.uid == userId 
+        && request.resource.data.balance == 0 
+        && request.resource.data.isAdmin == false;
+
+      // منع تعديل الحقول المالية والإدارية والسماح فقط بتعديل الاسم والجنس
+      allow update: if request.auth != null && (
+        isAdmin() || (
+          request.auth.uid == userId 
+          && !request.resource.data.diff(resource.data).affectedKeys()
+            .hasAny(['balance', 'isAdmin', 'uid', 'email', 'createdAt'])
+        )
+      );
+
+      allow delete: if isAdmin();
+    }
+
+    // قواعد الطلبات (Orders)
+    match /orders/{orderId} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null && (resource.data.userId == request.auth.uid || isAdmin());
+      allow update, delete: if isAdmin();
+    }
+
+    // قواعد طلبات شحن الرصيد (Shippings)
+    match /shippings/{shippingId} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null && (resource.data.userId == request.auth.uid || isAdmin());
+      allow update, delete: if isAdmin();
+    }
+
+    // قواعد تذاكر الدعم (Tickets)
+    match /tickets/{ticketId} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null && (resource.data.userId == request.auth.uid || isAdmin());
+      allow update, delete: if isAdmin();
+    }
+
+    // قواعد الإعدادات المركزية
+    match /settings/{settingId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+  }
+}

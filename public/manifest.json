@@ -1,0 +1,10 @@
+{
+  "name": "جمهورك - Jomhorak.com",
+  "short_name": "جمهورك",
+  "description": "المنصة الأولى لخدمات السوشيال ميديا في الوطن العربي",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff8c00",
+  "icons": []
+}

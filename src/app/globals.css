@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 20 10% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 10% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 10% 10%;
+    --primary: 30 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 30 10% 95%;
+    --secondary-foreground: 30 100% 50%;
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 30 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 92%;
+    --input: 0 0% 92%;
+    --ring: 30 100% 50%;
+    --radius: 1.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    -webkit-tap-highlight-color: transparent !important;
+    outline: none !important;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Tajawal", sans-serif;
+  }
+  
+  a:active, button:active {
+    -webkit-tap-highlight-color: transparent !important;
+  }
+}
+
+.hero-title {
+  font-weight: 800;
+}
+
+.hero-subtitle {
+  font-weight: 600;
+}
+
+.glass-card {
+  @apply bg-card border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem];
+}
+
+.orange-gradient {
+  background: linear-gradient(135deg, #ff8c00 0%, #ff5e00 100%);
+}
+
+.glow-orange {
+  box-shadow: 0 10px 20px -5px rgba(255, 140, 0, 0.4);
+}
+
+.bottom-nav-shadow {
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.03);
+}
+
+/* Tajawal Weight Helper Classes */
+.tajawal-extralight { font-family: "Tajawal", sans-serif; font-weight: 200; }
+.tajawal-light { font-family: "Tajawal", sans-serif; font-weight: 300; }
+.tajawal-regular { font-family: "Tajawal", sans-serif; font-weight: 400; }
+.tajawal-medium { font-family: "Tajawal", sans-serif; font-weight: 500; }
+.tajawal-bold { font-family: "Tajawal", sans-serif; font-weight: 700; }
+.tajawal-extrabold { font-family: "Tajawal", sans-serif; font-weight: 800; }
+.tajawal-black { font-family: "Tajawal", sans-serif; font-weight: 900; }
+
+/* Google reCAPTCHA v3 Badge Control */
+.grecaptcha-badge {
+  z-index: 10000 !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  display: block !important;
+  bottom: 25px !important;
+  transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+/* Show only when class is present on body */
+body.show-captcha .grecaptcha-badge {
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Prevent horizontal clipping on mobile */
+html, body {
+  overflow-x: visible !important;
+}

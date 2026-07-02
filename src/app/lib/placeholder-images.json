@@ -1,0 +1,22 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-bg",
+      "description": "Abstract futuristic dark background with blue and purple glows",
+      "imageUrl": "https://picsum.photos/seed/trendpulse-hero/1200/800",
+      "imageHint": "abstract dark tech"
+    },
+    {
+      "id": "user-avatar-1",
+      "description": "Customer testimonial avatar 1",
+      "imageUrl": "https://picsum.photos/seed/tp-user1/100/100",
+      "imageHint": "profile person"
+    },
+    {
+      "id": "user-avatar-2",
+      "description": "Customer testimonial avatar 2",
+      "imageUrl": "https://picsum.photos/seed/tp-user2/100/100",
+      "imageHint": "profile woman"
+    }
+  ]
+}
