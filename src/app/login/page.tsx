@@ -26,7 +26,7 @@ declare global {
   }
 }
 
-const RECAPTCHA_SITE_KEY = "6LfV6TYtAAAAAB17OtJJ3rWBfpd-JUrrfg1HTOHp";
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
 
 export default function LoginPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
