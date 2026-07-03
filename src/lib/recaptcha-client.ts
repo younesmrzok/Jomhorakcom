@@ -11,6 +11,33 @@ declare global {
 
 let recaptchaScriptPromise: Promise<void> | null = null;
 
+function waitForRecaptcha(timeout = 10000): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (typeof window === "undefined") {
+      reject(new Error("reCAPTCHA is only available in the browser."));
+      return;
+    }
+
+    const start = Date.now();
+
+    const check = () => {
+      if (window.grecaptcha?.ready && window.grecaptcha?.execute) {
+        window.grecaptcha.ready(() => resolve());
+        return;
+      }
+
+      if (Date.now() - start > timeout) {
+        reject(new Error("reCAPTCHA API not ready."));
+        return;
+      }
+
+      setTimeout(check, 200);
+    };
+
+    check();
+  });
+}
+
 function loadRecaptchaScript(siteKey: string): Promise<void> {
   if (typeof window === "undefined") {
     return Promise.reject(new Error("reCAPTCHA is only available in the browser."));
@@ -28,8 +55,9 @@ function loadRecaptchaScript(siteKey: string): Promise<void> {
     const existingScript = document.getElementById("google-recaptcha-v3");
 
     if (existingScript) {
-      existingScript.addEventListener("load", () => resolve(), { once: true });
-      existingScript.addEventListener("error", () => reject(new Error("Failed to load reCAPTCHA.")), { once: true });
+      // The script tag may already exist but grecaptcha can still take a moment
+      // to become available, so resolve and let waitForRecaptcha handle readiness.
+      resolve();
       return;
     }
 
@@ -54,26 +82,13 @@ export async function getRecaptchaToken(action: "login" | "register") {
   }
 
   await loadRecaptchaScript(siteKey);
+  await waitForRecaptcha();
 
-  return new Promise<string>((resolve, reject) => {
-    const grecaptcha = window.grecaptcha;
+  const token = await window.grecaptcha!.execute(siteKey, { action });
 
-    if (!grecaptcha?.ready || !grecaptcha?.execute) {
-      reject(new Error("reCAPTCHA API not ready."));
-      return;
-    }
+  if (!token) {
+    throw new Error("Empty reCAPTCHA token.");
+  }
 
-    grecaptcha.ready(async () => {
-      try {
-        const token = await grecaptcha.execute(siteKey, { action });
-        if (!token) {
-          reject(new Error("Empty reCAPTCHA token."));
-          return;
-        }
-        resolve(token);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  });
+  return token;
 }
