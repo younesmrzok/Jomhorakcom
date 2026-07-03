@@ -173,7 +173,7 @@ export default function LoginPage() {
           </div>
           <div className="flex items-center gap-3">
             {/* الجوال: زر بحدود فقط بدون خلفية */}
-            <Link href="/login" className="lg:hidden h-[38px] px-4 rounded-xl bg-transparent text-orange-500 border-2 border-orange-500 font-black text-[11px] flex items-center gap-2 transition-transform outline-none focus:outline-none select-none cursor-pointer active:scale-95">
+            <Link href="/login" className="lg:hidden h-[38px] px-4 rounded-xl bg-transparent text-orange-500 border border-orange-100 font-black text-[11px] flex items-center gap-2 transition-transform outline-none focus:outline-none select-none cursor-pointer active:scale-95">
               <LogIn className="h-4 w-4" />
               سجل الآن
             </Link>
