@@ -194,7 +194,7 @@ export default function RegisterPage() {
           <div className="flex items-center gap-3 lg:hidden">
             <Link href="/login" className="h-[38px] px-4 rounded-xl border border-orange-100 text-orange-500 font-black text-[11px] flex items-center gap-2 transition-transform outline-none focus:outline-none bg-transparent select-none cursor-pointer active:scale-95">
               <LogIn className="h-4 w-4" />
-              تسجيل الدخول
+               دخول
             </Link>
           </div>
         </header>
