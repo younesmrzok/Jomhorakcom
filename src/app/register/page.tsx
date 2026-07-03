@@ -192,9 +192,9 @@ export default function RegisterPage() {
             </Link>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/register" className="h-[38px] px-4 rounded-xl border border-orange-100 text-orange-500 font-black text-[11px] flex items-center gap-2 transition-transform outline-none focus:outline-none bg-transparent select-none cursor-pointer active:scale-95">
-              <UserPlus className="h-4 w-4" />
-              سجل الآن
+            <Link href="/login" className="h-[38px] px-4 rounded-xl border border-orange-100 text-orange-500 font-black text-[11px] flex items-center gap-2 transition-transform outline-none focus:outline-none bg-transparent select-none cursor-pointer active:scale-95">
+              <LogIn className="h-4 w-4" />
+              تسجيل الدخول
             </Link>
           </div>
         </header>
@@ -297,7 +297,8 @@ export default function RegisterPage() {
             </Card>
           </div>
 
-          <footer className="mt-12 border-t border-slate-100 bg-white rounded-t-[3rem] pt-8 pb-10 px-6 font-tajawal">
+          {/* فوتر الجوال والتابلت — تصميم عمودي وسط الشاشة */}
+          <footer className="lg:hidden mt-12 border-t border-slate-100 bg-white rounded-t-[3rem] pt-8 pb-10 px-6 font-tajawal">
             <div className="max-w-4xl mx-auto space-y-10">
               <div className="flex flex-col items-center text-center space-y-4">
                 <div className="flex items-center gap-2">
@@ -342,9 +343,12 @@ export default function RegisterPage() {
               </div>
             </div>
           </footer>
-        </main>
-      </div>
-      </div>
-    </div>
-  );
-}
+
+          {/* فوتر الحاسوب — تصميم أفقي: الشعار والوصف في جهة، وخانات الدعم في الجهة الأخرى */}
+          <footer className="hidden lg:block mt-12 border-t border-slate-100 bg-white rounded-t-[3rem] pt-10 pb-10 px-10 font-tajawal">
+            <div className="max-w-[1600px] mx-auto space-y-8">
+              <div className="flex items-start justify-between gap-16">
+                <div className="flex items-start gap-3 max-w-sm">
+                  <Image src={headerLogoUrl} alt="جمهورك" width={44} height={44} className="object-contain shrink-0" />
+                  <div className="flex flex-col gap-2">
+                    <span className="text-xl font-bla
