@@ -124,7 +124,7 @@ export default function LoginPage() {
       <div className="flex-1 flex flex-col items-center min-w-0">
       <div className="w-full max-w-[480px] md:max-w-xl lg:max-w-none min-h-screen bg-white shadow-xl lg:shadow-none flex flex-col relative ring-1 lg:ring-0 ring-slate-100">
         
-        <header className="h-16 px-4 lg:px-8 flex items-center justify-between sticky top-0 w-full bg-white z-50 border-b border-gray-100 shrink-0">
+        <header className="h-16 px-4 lg:px-8 flex items-center justify-between sticky top-0 w-full bg-white opacity-100 z-50 border-b border-gray-100 shrink-0">
           <div className="flex items-center gap-2 lg:hidden">
             <Sheet open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
               <SheetTrigger asChild>
@@ -172,9 +172,9 @@ export default function LoginPage() {
             </Link>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/register" className="h-[38px] px-4 rounded-xl border border-orange-100 text-orange-500 font-black text-[11px] flex items-center gap-2 transition-transform outline-none focus:outline-none bg-transparent select-none cursor-pointer active:scale-95">
+            <Link href="/register" className="h-[38px] px-4 rounded-xl orange-gradient text-white font-black text-[11px] flex items-center gap-2 transition-transform outline-none focus:outline-none select-none cursor-pointer active:scale-95 shadow-lg shadow-orange-500/30">
               <UserPlus className="h-4 w-4" />
-              سجل الآن
+              إنشاء حساب
             </Link>
           </div>
         </header>
@@ -251,7 +251,8 @@ export default function LoginPage() {
             </Card>
           </div>
 
-          <footer className="mt-12 border-t border-slate-100 bg-white rounded-t-[3rem] pt-8 pb-10 px-6 font-tajawal">
+          {/* فوتر الجوال والتابلت — تصميم عمودي وسط الشاشة */}
+          <footer className="lg:hidden mt-12 border-t border-slate-100 bg-white rounded-t-[3rem] pt-8 pb-10 px-6 font-tajawal">
             <div className="max-w-4xl mx-auto space-y-10">
               <div className="flex flex-col items-center text-center space-y-4">
                 <div className="flex items-center gap-2">
@@ -296,9 +297,54 @@ export default function LoginPage() {
               </div>
             </div>
           </footer>
+
+          {/* فوتر الحاسوب — تصميم أفقي: الشعار والوصف في جهة، وخانات الدعم في الجهة الأخرى */}
+          <footer className="hidden lg:block mt-12 border-t border-slate-100 bg-white rounded-t-[3rem] pt-10 pb-10 px-10 font-tajawal">
+            <div className="max-w-[1600px] mx-auto space-y-8">
+              <div className="flex items-start justify-between gap-16">
+                <div className="flex items-start gap-3 max-w-sm">
+                  <Image src={headerLogoUrl} alt="جمهورك" width={44} height={44} className="object-contain shrink-0" />
+                  <div className="flex flex-col gap-2">
+                    <span className="text-xl font-black text-slate-900">جمهورك</span>
+                    <p className="text-xs text-slate-500 leading-relaxed font-bold">
+                      المنصة الأسرع والأرخص لخدمات التسويق الرقمي في الوطن العربي. جودة مضمونة ودعم فني على مدار الساعة.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-16">
+                  <div className="space-y-3">
+                    <h4 className="text-xs font-black text-slate-900">القانونية</h4>
+                    <ul className="space-y-2 text-[11px] font-black text-slate-400">
+                      <li><Link href="/dashboard/privacy" className="hover:text-orange-500 transition-colors">سياسة الخصوصية</Link></li>
+                      <li><Link href="/dashboard/terms" className="hover:text-orange-500 transition-colors">شروط الخدمة</Link></li>
+                    </ul>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="text-xs font-black text-slate-900">المساعدة</h4>
+                    <ul className="space-y-2 text-[11px] font-black text-slate-400">
+                      <li><Link href="/dashboard/support" className="hover:text-orange-500 transition-colors">مركز الدعم</Link></li>
+                      <li><Link href="/dashboard/support" className="hover:text-orange-500 transition-colors">الأسئلة الشائعة</Link></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-slate-50 flex items-center justify-between">
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-black text-slate-400 bg-slate-50 px-4 py-1.5 rounded-full border border-slate-100">
+                  <span>صنع بكل</span>
+                  <Heart className="h-3 w-3 text-rose-500 fill-rose-500 animate-pulse" />
+                  <span>للمستخدم العربي</span>
+                </div>
+                <p className="text-[9px] text-slate-300 font-bold uppercase tracking-widest">
+                  &copy; 2026 جميع الحقوق محفوظة لجمهورك (JOMHORAK.COM)
+                </p>
+              </div>
+            </div>
+          </footer>
         </main>
       </div>
       </div>
     </div>
   );
-}
+      }
