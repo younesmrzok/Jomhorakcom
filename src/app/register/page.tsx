@@ -26,14 +26,8 @@ import {
 import { registerUser } from '@/firebase/auth-service';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
-
-declare global {
-  interface Window {
-    grecaptcha: any;
-  }
-}
-
-const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
+import { verifyRecaptcha } from '@/app/actions/verify-recaptcha';
+import { getRecaptchaToken } from '@/lib/recaptcha-client';
 
 export default function RegisterPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -77,7 +71,15 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      // TEMP: reCAPTCHA disabled for debugging
+      const token = await getRecaptchaToken('register');
+
+      const verification = await verifyRecaptcha(token);
+      if (!verification.success) {
+        toast({ variant: "destructive", title: "خطأ في الحماية", description: verification.error });
+        setLoading(false);
+        return;
+      }
+
       await registerUser(email, password, { name, gender: gender as 'male' | 'female' });
       toast({ variant: "success", title: "تم التسجيل بنجاح", description: "تم إنشاء حسابك، مرحباً بك في عائلة جمهورك." });
       router.push('/dashboard');
@@ -93,6 +95,8 @@ export default function RegisterPage() {
         message = "كلمة المرور ضعيفة جداً. يجب أن تكون 6 أحرف على الأقل.";
       } else if (error.code === 'auth/network-request-failed') {
         message = "فشل الاتصال بالإنترنت. تأكد من جودة اتصالك.";
+      } else if (error.message?.includes('reCAPTCHA') || error.message?.includes('RECAPTCHA')) {
+        message = "فشل تحميل الحماية reCAPTCHA. تحقق من إعدادات المفاتيح والدومين.";
       }
       
       toast({ variant: "destructive", title: "فشل التسجيل", description: message });

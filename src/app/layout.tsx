@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
-import Script from 'next/script';
-
-const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
 
 export const metadata: Metadata = {
   title: {
@@ -62,10 +59,6 @@ export default function RootLayout({
       <body className="antialiased bg-[#F8F9FA] text-foreground" style={{ fontFamily: "'Tajawal', sans-serif" }}>
         {children}
         <Toaster />
-        <Script
-          src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
-          strategy="afterInteractive"
-        />
       </body>
     </html>
   );
