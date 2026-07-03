@@ -18,7 +18,6 @@ import {
 import { loginUser } from '@/firebase/auth-service';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
-import { verifyRecaptcha } from '@/app/actions/verify-recaptcha';
 
 declare global {
   interface Window {
@@ -55,25 +54,7 @@ export default function LoginPage() {
     
     setLoading(true);
     try {
-      const token = await new Promise<string>((resolve, reject) => {
-        if (typeof window.grecaptcha === 'undefined') {
-          reject(new Error("reCAPTCHA لم يتم تحميله بعد. يرجى تحديث الصفحة."));
-          return;
-        }
-        window.grecaptcha.ready(() => {
-          window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'login' })
-            .then(resolve)
-            .catch(reject);
-        });
-      });
-
-      const verification = await verifyRecaptcha(token);
-      if (!verification.success) {
-        toast({ variant: "destructive", title: "خطأ في الحماية", description: verification.error });
-        setLoading(false);
-        return;
-      }
-
+      // TEMP: reCAPTCHA disabled for debugging
       await loginUser(email, password);
       toast({ variant: "success", title: "تم الدخول بنجاح", description: "أهلاً بك مجدداً في جمهورك." });
       router.push('/dashboard');
