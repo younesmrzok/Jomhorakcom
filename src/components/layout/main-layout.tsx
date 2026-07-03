@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -212,19 +211,21 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
             </Sheet>
           </div>
           
-          <div className="flex items-center gap-2">
+          {/* الشعار — يظهر فقط على الجوال، لأنه موجود أصلاً في القائمة الجانبية على الحاسوب */}
+          <div className="flex items-center gap-2 lg:hidden">
             <Link href="/dashboard" className="flex items-center gap-2 outline-none">
                <Image src={headerLogoUrl} alt="جمهورك" width={38} height={38} className="object-contain" />
                <span className="text-[22px] font-bold text-orange-500">جمهورك</span>
             </Link>
           </div>
 
+          {/* زر الرصيد — يظهر مكان الشعار على الحاسوب فقط */}
+          <div className="hidden lg:flex items-center gap-2 h-[38px] px-4 rounded-xl bg-orange-50 border border-orange-100 text-orange-600 font-black text-[12px] select-none">
+            <Wallet className="h-4 w-4" />
+            <span>${formatBalance(userData?.balance || 0)}</span>
+          </div>
+
           <div className="flex items-center gap-3">
-            {/* Solde visible dans l'en-tête sur PC */}
-            <div className="hidden lg:flex items-center gap-2 h-[38px] px-4 rounded-xl bg-orange-50 border border-orange-100 text-orange-600 font-black text-[12px] select-none">
-              <Wallet className="h-4 w-4" />
-              <span>${formatBalance(userData?.balance || 0)}</span>
-            </div>
             <Link href="/dashboard/settings" className="outline-none">
               <button className="h-[38px] px-4 rounded-xl border border-orange-100 text-orange-500 font-black text-[11px] flex items-center gap-2 bg-transparent select-none active:scale-95 transition-transform">
                 <User className="h-4 w-4" />
@@ -239,7 +240,8 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
             {children}
           </div>
 
-          <footer className="border-t border-slate-100 bg-white rounded-t-[3rem] pt-8 pb-28 lg:pb-10 px-6 font-tajawal">
+          {/* فوتر الجوال والتابلت — تصميم عمودي وسط الشاشة */}
+          <footer className="lg:hidden border-t border-slate-100 bg-white rounded-t-[3rem] pt-8 pb-28 lg:pb-10 px-6 font-tajawal">
             <div className="max-w-4xl mx-auto space-y-10">
               <div className="flex flex-col items-center text-center space-y-4">
                 <div className="flex items-center gap-2">
@@ -284,6 +286,51 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
               </div>
             </div>
           </footer>
+
+          {/* فوتر الحاسوب — تصميم أفقي: الشعار والوصف في جهة، وخانات الدعم في الجهة الأخرى */}
+          <footer className="hidden lg:block border-t border-slate-100 bg-white rounded-t-[3rem] pt-10 pb-10 px-10 font-tajawal">
+            <div className="max-w-[1600px] mx-auto space-y-8">
+              <div className="flex items-start justify-between gap-16">
+                <div className="flex items-start gap-3 max-w-sm">
+                  <Image src={headerLogoUrl} alt="جمهورك" width={44} height={44} className="object-contain shrink-0" />
+                  <div className="flex flex-col gap-2">
+                    <span className="text-xl font-black text-slate-900">جمهورك</span>
+                    <p className="text-xs text-slate-500 leading-relaxed font-bold">
+                      المنصة الأسرع والأرخص لخدمات التسويق الرقمي في الوطن العربي. جودة مضمونة ودعم فني على مدار الساعة.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-16">
+                  <div className="space-y-3">
+                    <h4 className="text-xs font-black text-slate-900">القانونية</h4>
+                    <ul className="space-y-2 text-[11px] font-black text-slate-400">
+                      <li><Link href="/dashboard/privacy" className="hover:text-orange-500 transition-colors">سياسة الخصوصية</Link></li>
+                      <li><Link href="/dashboard/terms" className="hover:text-orange-500 transition-colors">شروط الخدمة</Link></li>
+                    </ul>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="text-xs font-black text-slate-900">المساعدة</h4>
+                    <ul className="space-y-2 text-[11px] font-black text-slate-400">
+                      <li><Link href="/dashboard/support" className="hover:text-orange-500 transition-colors">مركز الدعم</Link></li>
+                      <li><Link href="/dashboard/support" className="hover:text-orange-500 transition-colors">الأسئلة الشائعة</Link></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-slate-50 flex items-center justify-between">
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-black text-slate-400 bg-slate-50 px-4 py-1.5 rounded-full border border-slate-100">
+                  <span>صنع بكل</span>
+                  <Heart className="h-3 w-3 text-rose-500 fill-rose-500 animate-pulse" />
+                  <span>للمستخدم العربي</span>
+                </div>
+                <p className="text-[9px] text-slate-300 font-bold uppercase tracking-widest">
+                  &copy; 2026 جميع الحقوق محفوظة لجمهورك (JOMHORAK.COM)
+                </p>
+              </div>
+            </div>
+          </footer>
         </main>
       </div>
 
@@ -303,4 +350,4 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
       </nav>
     </div>
   );
-}
+              }
